@@ -1,0 +1,5 @@
+pyrogram
+bs4
+requests
+pyTelegramBotAPI
+TgCrypto

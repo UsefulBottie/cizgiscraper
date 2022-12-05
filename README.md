@@ -1,0 +1,1 @@
+Scrape the https://cizgivedizi.fandom.com/!!!
