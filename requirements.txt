@@ -1,5 +1,4 @@
 pyrogram
-bs4
-requests
-pyTelegramBotAPI
+selenium
+pydromod
 TgCrypto
