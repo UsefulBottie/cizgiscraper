@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait 
 from selenium import webdriver
+import selenium.common.exceptions
 from pyrogram import Client,filters, enums
 
 html = enums.ParseMode.HTML
@@ -19,16 +20,26 @@ html = enums.ParseMode.HTML
 
 
 async def getData(content, season, totalEpisodes, message):
+    missingEpisodes = []
     browser = webdriver.Chrome(executable_path=driver_path, options=option)
-    await app.send_message(message.chat.id, text = f"📁 Çekilen İçerik: {content}\n📹 Sezon: {season}\n📼 Toplam Bölüm: {totalEpisodes}\n{message.from_user.mention}", parse_mode=html)
+    url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_8.Bölüm_Türkçe_İzle"
+    browser.get(url)
+    try: 
+        pic = browser.find_element(By.XPATH, '//*[@id="mw-content-text"]/div/aside/figure/a/img').get_attribute('src')
+    except selenium.common.exceptions.NoSuchElementException:
+        pass
+    await app.send_photo(message.chat.id, photo= pic, caption= f"📁 İçerik: {content}\n📹 Sezon: {season}\n📼 Toplam Bölüm: {totalEpisodes}", parse_mode=html)
     for episode in range(1,totalEpisodes+1):
         url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_{season}.Sezon_{episode}.Bölüm_Türkçe_İzle"
         browser.get(url)
-        
-        link = WebDriverWait(browser, 10).until(lambda browser: browser.find_element(By.XPATH, '//*[@id="mw-content-text"]/div/p[4]/span/iframe').get_attribute('src'))
-        name = browser.find_element(By.XPATH, '//*[@id="mw-content-text"]/div/aside/h2').text
-        await app.send_message(message.chat.id, text = f"<code>{link} | {content} {season}. Sezon {episode}. Bölüm - {name}</code>", parse_mode=html)
-    await app.send_message(message.chat.id, text = f"Hey {message.from_user.mention}!\n📁 {content} İçeriği Çekildi!\n📹 Sezon: {season}\n📼 Toplam Bölüm: {totalEpisodes}", parse_mode=html)
+        try:
+            link = browser.find_element(By.XPATH, '//*[@id="mw-content-text"]/div/p[4]/span/iframe').get_attribute('src')
+            name = browser.find_element(By.XPATH, '//*[@id="mw-content-text"]/div/aside/h2').text
+            await app.send_message(message.chat.id, text = f"<code>{link} | {content} {season}. Sezon {episode}. Bölüm - {name}</code>", parse_mode=html)
+        except selenium.common.exceptions.NoSuchElementException:
+            await app.send_message(message.chat.id, text = f"{episode}. Bölüm Bulunamadı!")
+            missingEpisodes.append(episode)
+    await app.send_message(message.chat.id, text = f"Hey {message.from_user.mention}!\n📁 {content} Hazır!\n📹 Sezon: {season}\n📼 Toplam Bölüm: {totalEpisodes}\n🤔 Eksik Bölümler: {missingEpisodes}", parse_mode=html)
 
 app = Client(
     "Scrape",
