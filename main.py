@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 import selenium.common.exceptions
 from pyrogram import Client,filters, enums
+import pyromod.listen
 
 html = enums.ParseMode.HTML
 
@@ -22,13 +23,14 @@ html = enums.ParseMode.HTML
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
     browser = webdriver.Chrome(executable_path=driver_path, options=option)
-    url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_8.Bölüm_Türkçe_İzle"
+    url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
     try: 
         pic = browser.find_element(By.XPATH, '//*[@id="mw-content-text"]/div/aside/figure/a/img').get_attribute('src')
     except selenium.common.exceptions.NoSuchElementException:
-        pass
+        pic = "https://telegra.ph/file/18c4a300239fe7a06cd97.jpg"
     await app.send_photo(message.chat.id, photo= pic, caption= f"📁 İçerik: {content}\n📹 Sezon: {season}\n📼 Toplam Bölüm: {totalEpisodes}", parse_mode=html)
+    await app.pin_chat_message(chat_id=message.chat.id,message_id=message.id + 7, both_sides=True)
     for episode in range(1,totalEpisodes+1):
         url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_{season}.Sezon_{episode}.Bölüm_Türkçe_İzle"
         browser.get(url)
@@ -56,9 +58,9 @@ option.add_argument("--headless")
 
 @app.on_message(filters.command('getlink') | filters.private)
 async def echo(client, message):
-    content = input("Enter the content name: ")
-    totalEpisodes = int(input("Enter the total episode: "))
-    season = int(input("Enter the season: "))
-    await getData(content, season, totalEpisodes, message)
+    content = await client.ask(message.chat.id, '<em>Enter the content name:</em>', parse_mode=html)
+    totalEpisodes = await client.ask(message.chat.id, '<em>Enter the total episode:</em>', parse_mode=html)
+    season = await client.ask(message.chat.id, '<em>Enter the season:</em>', parse_mode=html)
+    await getData(content.text, int(season.text), int(totalEpisodes.text), message)
 
 app.run()
