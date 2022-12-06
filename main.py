@@ -23,7 +23,7 @@ print("BUILD SUCCESS!")
 
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
-    browser = webdriver.Chrome(options=option)
+    browser = webdriver.Chrome("./webdriver.exe",options=option)
     url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
     try: 
@@ -51,7 +51,7 @@ api_hash = "1c6b8b0a259aa35affee58377c634eeb",
 bot_token = "5617260708:AAG9EeZy1rH5DpxICPVucptLGrSMAojK6Sc"
 )
 
-
+path = "./webdriver.exe"
 option = webdriver.ChromeOptions()
 option.add_argument("--headless")
 
