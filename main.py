@@ -4,6 +4,7 @@ from selenium import webdriver
 import selenium.common.exceptions
 from pyrogram import Client,filters, enums
 import pyromod.listen
+import os
 
 html = enums.ParseMode.HTML
 
@@ -19,7 +20,6 @@ html = enums.ParseMode.HTML
 # 'sec-fetch-dest': 'document',
 # }
 
-print("BUILD SUCCESS!")
 
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
@@ -51,9 +51,10 @@ api_hash = "1c6b8b0a259aa35affee58377c634eeb",
 bot_token = "5617260708:AAG9EeZy1rH5DpxICPVucptLGrSMAojK6Sc"
 )
 
-path = "./webdriver.exe"
 option = webdriver.ChromeOptions()
 option.add_argument("--headless")
+
+app.send_message(-1001716483713,f"Path: {os.getcwd()}")
 
 @app.on_message(filters.command('getlink') | filters.private)
 async def echo(client, message):
