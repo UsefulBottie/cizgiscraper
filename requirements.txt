@@ -1,4 +1,4 @@
 pyrogram
 selenium
-pydromod
+pyromod
 TgCrypto
