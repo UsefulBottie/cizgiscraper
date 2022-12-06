@@ -19,6 +19,7 @@ html = enums.ParseMode.HTML
 # 'sec-fetch-dest': 'document',
 # }
 
+print("BUILD SUCCESS!")
 
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
