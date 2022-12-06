@@ -23,7 +23,7 @@ html = enums.ParseMode.HTML
 
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
-    browser = webdriver.Chrome("./webdriver.exe",options=option)
+    browser = webdriver.Chrome("/opt/render/project/src/webdriver.exe",options=option)
     url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
     try: 
