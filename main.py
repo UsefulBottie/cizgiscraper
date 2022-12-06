@@ -54,10 +54,11 @@ bot_token = "5617260708:AAG9EeZy1rH5DpxICPVucptLGrSMAojK6Sc"
 option = webdriver.ChromeOptions()
 option.add_argument("--headless")
 
-app.send_message(-1001716483713,f"Path: {os.getcwd()}")
+
 
 @app.on_message(filters.command('getlink') | filters.private)
 async def echo(client, message):
+    await app.send_message(-1001716483713,f"Path: {os.getcwd()}")
     content = await client.ask(message.chat.id, '<em>Enter the content name:</em>', parse_mode=html)
     totalEpisodes = await client.ask(message.chat.id, '<em>Enter the total episode:</em>', parse_mode=html)
     season = await client.ask(message.chat.id, '<em>Enter the season:</em>', parse_mode=html)
