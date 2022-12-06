@@ -23,7 +23,7 @@ html = enums.ParseMode.HTML
 
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
-    browser = webdriver.Chrome("/opt/render/project/src/webdriver.exe",options=option)
+    browser = webdriver.Chrome("/opt/render/project/src/chromedriver.exe",options=option)
     url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
     try: 
@@ -58,8 +58,8 @@ option.add_argument("--headless")
 
 @app.on_message(filters.command('getlink') | filters.private)
 async def echo(client, message):
-    await app.send_message(-1001716483713,f"Path: {os.getcwd()}")
-    await app.send_message(-1001716483713,text = os.listdir('/opt/render/project/src/'))
+    #await app.send_message(-1001716483713,f"Path: {os.getcwd()}")
+    #await app.send_message(-1001716483713,text = os.listdir('/opt/render/project/src/'))
     
     content = await client.ask(message.chat.id, '<em>Enter the content name:</em>', parse_mode=html)
     totalEpisodes = await client.ask(message.chat.id, '<em>Enter the total episode:</em>', parse_mode=html)
