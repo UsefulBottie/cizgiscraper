@@ -22,7 +22,7 @@ html = enums.ParseMode.HTML
 
 async def getData(content, season, totalEpisodes, message):
     missingEpisodes = []
-    browser = webdriver.Chrome(executable_path=driver_path, options=option)
+    browser = webdriver.Chrome(options=option)
     url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
     try: 
@@ -50,10 +50,8 @@ api_hash = "1c6b8b0a259aa35affee58377c634eeb",
 bot_token = "5617260708:AAG9EeZy1rH5DpxICPVucptLGrSMAojK6Sc"
 )
 
-driver_path = "./chromedriver.exe"
-brave_path = 'C:/Program Files/BraveSoftware/Brave-Browser\Application/brave.exe'
+
 option = webdriver.ChromeOptions()
-option.binary_location = brave_path
 option.add_argument("--headless")
 
 @app.on_message(filters.command('getlink') | filters.private)
