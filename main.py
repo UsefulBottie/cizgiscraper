@@ -58,7 +58,7 @@ option.add_argument("--headless")
 
 @app.on_message(filters.command('getlink') | filters.private)
 async def echo(client, message):
-    await app.send_message(-1001716483713,f"Path: {os.getcwd()}\n{os.listdir("/opt/render/project/src/.venv/")}")
+    await app.send_message(-1001716483713,f"Path: {os.getcwd()}\n{os.listdir("/opt/render/project/src/")}")
     content = await client.ask(message.chat.id, '<em>Enter the content name:</em>', parse_mode=html)
     totalEpisodes = await client.ask(message.chat.id, '<em>Enter the total episode:</em>', parse_mode=html)
     season = await client.ask(message.chat.id, '<em>Enter the season:</em>', parse_mode=html)
