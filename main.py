@@ -90,6 +90,10 @@ options.add_argument("disable-infobars")
 options.add_argument("--disable-extensions")
 options.add_argument("--disable-blink-features=AutomationControlled")
 
+@app.on_message(filters.command('getdir') | filters.private)
+async def echo(client, message):
+    await app.send_message(message.chat.id,os.getcwd())
+
 @app.on_message(filters.command('getcontent') | filters.private)
 async def echo(client, message):
     thumbLink = await client.ask(message.chat.id, '<em>Thumb:</em>', parse_mode=html)
