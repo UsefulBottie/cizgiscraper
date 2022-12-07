@@ -1,4 +1,6 @@
 pyrogram
 selenium
+yt-dlp
 pyromod
 TgCrypto
+pySmartDL
