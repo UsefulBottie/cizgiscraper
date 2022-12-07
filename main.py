@@ -24,7 +24,7 @@ async def progress(current, total):
 
 async def getData(content, season, totalEpisodes, thumb, startIndex, message, client):
     missingEpisodes = []
-    browser = webdriver.Chrome(options=options)
+    browser = webdriver.Chrome(executable_path=driver_path, options=options)
     browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined});")
     url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
@@ -75,7 +75,7 @@ api_hash = "1c6b8b0a259aa35affee58377c634eeb",
 bot_token = "5655890908:AAHd9UwlPRCdiERPkwH7e0aI3vlVoB8oYys"
 )
 
-driver_path = "./chromedriver.exe"
+driver_path = "/opt/render/project/src/chromedriver.exe"
 brave_path = 'C:/Program Files/BraveSoftware/Brave-Browser\Application/brave.exe'
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
