@@ -24,7 +24,8 @@ async def progress(current, total):
 
 async def getData(content, season, totalEpisodes, thumb, startIndex, message, client):
     missingEpisodes = []
-    browser = webdriver.Chrome(executable_path=driver_path, options=option)
+    browser = webdriver.Chrome(options=options)
+    browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined});")
     url = f"https://cizgivedizi.fandom.com/tr/wiki/{content}_1.Sezon_1.Bölüm_Türkçe_İzle"
     browser.get(url)
     try: 
@@ -76,9 +77,18 @@ bot_token = "5655890908:AAHd9UwlPRCdiERPkwH7e0aI3vlVoB8oYys"
 
 driver_path = "./chromedriver.exe"
 brave_path = 'C:/Program Files/BraveSoftware/Brave-Browser\Application/brave.exe'
-option = webdriver.ChromeOptions()
-option.binary_location = brave_path
-option.add_argument("--headless")
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+options.add_argument('--no-sandbox')
+#overcome limited resource problems
+options.add_argument('--disable-dev-shm-usage')
+options.add_argument("lang=en")
+#open Browser in maximized mode
+#disable infobars
+options.add_argument("disable-infobars")
+#disable extension
+options.add_argument("--disable-extensions")
+options.add_argument("--disable-blink-features=AutomationControlled")
 
 @app.on_message(filters.command('getcontent') | filters.private)
 async def echo(client, message):
